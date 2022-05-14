@@ -1,4 +1,4 @@
-﻿namespace UserLoginFramework
+﻿namespace UserLogin
 {
     public enum UserRoles
     {

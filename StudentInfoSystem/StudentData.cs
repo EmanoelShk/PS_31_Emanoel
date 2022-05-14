@@ -31,7 +31,7 @@ namespace StudentInfoSystem
                 testStudents.Add(new Student
                 {
                     Name = "Emanoel",
-                    SurName = "Tsvetanov",
+                    Surname = "Tsvetanov",
                     LastName = "Shkodrov",
                     Faculty = "FCST",
                     Major = "CSE",
@@ -47,7 +47,7 @@ namespace StudentInfoSystem
 
         public static bool IsStudentDataFilled(Student student)
         {
-            return !string.IsNullOrEmpty(student.Name) && !string.IsNullOrEmpty(student.SurName) && !string.IsNullOrEmpty(student.LastName) 
+            return !string.IsNullOrEmpty(student.Name) && !string.IsNullOrEmpty(student.Surname) && !string.IsNullOrEmpty(student.LastName) 
                 && !string.IsNullOrEmpty(student.Faculty) && !string.IsNullOrEmpty(student.Major) && !string.IsNullOrEmpty(student.Degree)
                 && !string.IsNullOrEmpty(student.Status) && !string.IsNullOrEmpty(student.FacultyNumber)
                 && student.Course != 0 && student.Flow != 0 && student.Group != 0;

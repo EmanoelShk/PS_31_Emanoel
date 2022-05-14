@@ -13,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data;
+using System.Data.SqlClient;
+using UserLogin;
 
 namespace StudentInfoSystem
 {
@@ -38,9 +41,21 @@ namespace StudentInfoSystem
             }
         }
 
+        public List<string> StudStatusChoices { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
+            FillStudStatusChoices();
+            if (TestStudentsIfEmpty())
+            {
+                CopyTestStudents();
+            }
+            if (TestUsersIfEmpty())
+            {
+                CopyTestUsers();
+            }
         }
 
         private void ClearFormBbutton_Click(object sender, RoutedEventArgs e)
@@ -68,9 +83,18 @@ namespace StudentInfoSystem
         {
             foreach (var item in MainGrid.Children)
             {
-                if (item is TextBox)
+                if (item is GroupBox)
                 {
-                    ((TextBox)item).Text = string.Empty;
+                    if (((GroupBox)item).Content is Grid)
+                    {
+                        foreach (var innerItem in ((Grid)((GroupBox)item).Content).Children)
+                        {
+                            if (innerItem is TextBox)
+                            {
+                                ((TextBox)innerItem).Text = string.Empty;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -84,12 +108,12 @@ namespace StudentInfoSystem
         {
             Student student = new Student();
             student.Name = nameTextBox.Text;
-            student.SurName = surNameTextBox.Text;
+            student.Surname = surNameTextBox.Text;
             student.LastName = lastNameTextBox.Text;
             student.Faculty = facultyTextBox.Text;
             student.Major = majorTextBox.Text;
             student.Degree = degreeTextBox.Text;
-            student.Status = statusTextBox.Text;
+            student.Status = statusListBox.SelectedItem.ToString();
             student.FacultyNumber = facultyNumberTextBox.Text;
             if (int.TryParse(courseTextBox.Text, out int course))
             {
@@ -109,12 +133,12 @@ namespace StudentInfoSystem
         private void SetStudentDataToControls(Student student)
         {
             nameTextBox.Text = student.Name;
-            surNameTextBox.Text = student.SurName;
+            surNameTextBox.Text = student.Surname;
             lastNameTextBox.Text = student.LastName;
             facultyTextBox.Text = student.Faculty;
             majorTextBox.Text = student.Major;
             degreeTextBox.Text = student.Degree;
-            statusTextBox.Text = student.Status;
+            statusListBox.SelectedItem = student.Status;
             facultyNumberTextBox.Text = student.FacultyNumber;
             courseTextBox.Text = student.Course.ToString();
             flowTextBox.Text = student.Flow.ToString();
@@ -125,9 +149,18 @@ namespace StudentInfoSystem
         {
             foreach (var item in MainGrid.Children)
             {
-                if (item is TextBox)
+                if (item is GroupBox)
                 {
-                    ((TextBox)item).IsEnabled = false;
+                    if (((GroupBox)item).Content is Grid)
+                    {
+                        foreach (var innerItem in ((Grid)((GroupBox)item).Content).Children)
+                        {
+                            if (innerItem is TextBox)
+                            {
+                                ((TextBox)innerItem).IsEnabled = false;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -136,9 +169,18 @@ namespace StudentInfoSystem
         {
             foreach (var item in MainGrid.Children)
             {
-                if (item is TextBox)
+                if (item is GroupBox)
                 {
-                    ((TextBox)item).IsEnabled = true;
+                    if (((GroupBox)item).Content is Grid)
+                    {
+                        foreach (var innerItem in ((Grid)((GroupBox)item).Content).Children)
+                        {
+                            if (innerItem is TextBox)
+                            {
+                                ((TextBox)innerItem).IsEnabled = true;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -159,5 +201,75 @@ namespace StudentInfoSystem
             }
         }
 
+        private void FillStudStatusChoices()
+        {
+            StudStatusChoices = new List<string>();
+            using (IDbConnection connection = new
+            SqlConnection(Properties.Settings.Default.DbConnect))
+            {
+                string sqlquery =
+                @"SELECT StatusDescr FROM StudStatus";
+                IDbCommand command = new SqlCommand();
+                command.Connection = connection;
+                connection.Open();
+                command.CommandText = sqlquery;
+                IDataReader reader = command.ExecuteReader();
+                bool notEndOfResult;
+                notEndOfResult = reader.Read();
+                while (notEndOfResult)
+
+                {
+                    string s = reader.GetString(0);
+                    StudStatusChoices.Add(s);
+                    notEndOfResult = reader.Read();
+                }
+            }
+        }
+
+        public bool TestStudentsIfEmpty()
+        {
+            StudentInfoContext context = new StudentInfoContext();
+            IEnumerable<Student> queryStudents = context.Students;
+            int countStudents = queryStudents.Count();
+            if (countStudents == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void CopyTestStudents()
+        {
+            StudentInfoContext context = new StudentInfoContext();
+            foreach (Student st in StudentData.TestStudents)
+            {
+                context.Students.Add(st);
+
+            }
+            context.SaveChanges();
+        }
+
+        public bool TestUsersIfEmpty()
+        {
+            StudentInfoContext context = new StudentInfoContext();
+            IEnumerable<User> queryUsers = context.Users;
+            int countUsers = queryUsers.Count();
+            if (countUsers == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void CopyTestUsers()
+        {
+            StudentInfoContext context = new StudentInfoContext();
+            foreach (User u in UserData.TestUsers)
+            {
+                context.Users.Add(u);
+
+            }
+            context.SaveChanges();
+        }
     }
 }

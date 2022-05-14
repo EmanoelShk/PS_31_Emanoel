@@ -14,17 +14,26 @@
         </Grid.ColumnDefinitions>
         <Label x:Name="HelloLabel" Content="Hello, world!" HorizontalAlignment="Left" Margin="25,10,0,0" VerticalAlignment="Top" FontFamily="Simplex" FontSize="36"/>
         <Button x:Name="bntHello" Content="Здрасти!" HorizontalAlignment="Left" Margin="148,149,0,0" VerticalAlignment="Top" Width="75" Click="bntHello_Click"/>
-        <GroupBox Header="gbUser" HorizontalAlignment="Left" Height="352" Margin="10,0,0,0" VerticalAlignment="Top" Width="274"/>
+        <GroupBox Header="gbUser" HorizontalAlignment="Left" Height="235" Margin="10,0,0,0" VerticalAlignment="Top" Width="274"/>
 
         <Label x:Name="lblName" Content="Име:" HorizontalAlignment="Left" Margin="25,91,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="23" Margin="103,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+        <Label Content="n" HorizontalAlignment="Left" Margin="322,44,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.256,-0.171"/>
+        <TextBox x:Name="txtN" HorizontalAlignment="Left" Height="23" Margin="339,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="y" HorizontalAlignment="Left" Margin="322,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="-10.375,0.251"/>
+        <TextBox x:Name="txtY" HorizontalAlignment="Left" Height="23" Margin="339,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="Calc1" Content="Calculate n!" HorizontalAlignment="Left" Margin="479,47,0,0" VerticalAlignment="Top" Width="75" Click="Calc1_Click"/>
+        <Button x:Name="Calc2" Content="Calculate n^y" HorizontalAlignment="Left" Margin="479,78,0,0" VerticalAlignment="Top" Width="75" Click="Calc2_Click"/>
+
+        <ListBox x:Name="peopleListBox" HorizontalAlignment="Left" Height="100" Margin="670,74,0,0" VerticalAlignment="Top" Width="100">
+            <ListBoxItem Content="Mike"/>
+            <ListBoxItem Content="Lisa"/>
+            <ListBoxItem Content="John"/>
+            <ListBoxItem Content="Mary"/>
+        </ListBox>
         
-        <Label Content="n" HorizontalAlignment="Left" Margin="339,91,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.256,-0.171"/>
-        <TextBox x:Name="txtN" HorizontalAlignment="Left" Height="23" Margin="361,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label Content="y" HorizontalAlignment="Left" Margin="522,91,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtY" HorizontalAlignment="Left" Height="23" Margin="543,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="Calc1" Content="Calculate n!" HorizontalAlignment="Left" Margin="406,154,0,0" VerticalAlignment="Top" Width="75" Click="Calc1_Click"/>
-        <Button x:Name="Calc2" Content="Calculate n^y" HorizontalAlignment="Left" Margin="588,154,0,0" VerticalAlignment="Top" Width="75" Click="Calc2_Click"/>
+        <Button x:Name="greetingButton" Content="Greeting" HorizontalAlignment="Left" Margin="688,199,0,0" VerticalAlignment="Top" Width="75" Click="greet_btn_Click"/>
 
 
 

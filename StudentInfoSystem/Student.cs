@@ -8,9 +8,31 @@ namespace StudentInfoSystem
 {
     public class Student
     {
+        public Student()
+        {
+
+        }
+
+        public Student(string name, string surname, string lastName, string faculty, string major, string degree, string status, string facultyNumber, int course, int flow, int group)
+        {
+            Name = name;
+            Surname = surname;
+            LastName = lastName;
+            Faculty = faculty;
+            Major = major;
+            Degree = degree;
+            Status = status;
+            FacultyNumber = facultyNumber;
+            Course = course;
+            Flow = flow;
+            Group = group;
+        }
+
+        public int StudentId { get; set; }
+
         public string Name { get; set; }
 
-        public string SurName { get; set; }
+        public string Surname { get; set; }
 
         public string LastName { get; set; }
 
@@ -30,6 +52,6 @@ namespace StudentInfoSystem
 
         public int Group { get; set; }
 
-
+        public override string ToString() { return this.Name; }
     }
 }

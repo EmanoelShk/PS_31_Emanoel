@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UserLoginFramework
+namespace UserLogin
 {
     public class LoginValidation
     {
@@ -32,44 +32,31 @@ namespace UserLoginFramework
             if (_username.Equals(string.Empty))
             {
                 _errorLog = "Не е посочено потребителско име";
-                _errorfunc(_errorLog);
-                CurrentUserUsername = _username;
-                CurrentUserRole = UserRoles.ANONYMOUS;
-                return false;
             }
             if (_username.Length < 5)
             {
                 _errorLog = "Потребителско име не може да е по-малко от 5 символа";
-                _errorfunc(_errorLog);
-                CurrentUserUsername = _username;
-                CurrentUserRole = UserRoles.ANONYMOUS;
-                return false;
             }
             if (_password.Equals(string.Empty))
             {
                 _errorLog = "Не е посочена парола";
-                _errorfunc(_errorLog);
-                CurrentUserUsername = _username;
-                CurrentUserRole = UserRoles.ANONYMOUS;
-                return false;
             }
             if (_password.Length < 5)
             {
                 _errorLog = "Паролата не може да е по-малко от 5 символа";
-                _errorfunc(_errorLog);
-                CurrentUserUsername = _username;
-                CurrentUserRole = UserRoles.ANONYMOUS;
-                return false;
             }
             user = UserData.IsUserPassCorrect(_username, _password);
-            if (user == null)
+            if (user == null) _errorLog = "Потребителя не е намерен";
+
+            if (!string.IsNullOrEmpty(_errorLog))
             {
-                _errorLog = "Потребителя не е намерен";
                 _errorfunc(_errorLog);
-                CurrentUserUsername = _username;
+                Logger.LogActivity(_errorLog);
+                CurrentUserUsername = string.IsNullOrEmpty(_username) ? _username : "Unknown";
                 CurrentUserRole = UserRoles.ANONYMOUS;
                 return false;
             }
+
             CurrentUserUsername = _username;
             CurrentUserRole = (UserRoles)user.Role;
             Logger.LogActivity("Успешен login");

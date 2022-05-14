@@ -24,6 +24,16 @@ namespace WPFhello
         public MainWindow()
         {
             InitializeComponent();
+
+            ListBoxItem james = new ListBoxItem();
+            james.Content = "James";
+            peopleListBox.Items.Add(james);
+
+            ListBoxItem david = new ListBoxItem();
+            david.Content = "David";
+            peopleListBox.Items.Add(david);
+
+            peopleListBox.SelectedItem = james;
         }
 
         private void bntHello_Click(object sender, RoutedEventArgs e)
@@ -103,6 +113,14 @@ namespace WPFhello
             }
         }
 
+        private void greet_btn_Click(object sender, RoutedEventArgs e)
+        {
+            //string greetingMsg;
+            //greetingMsg = (peopleListBox.SelectedItem as ListBoxItem).Content.ToString();
+            //MessageBox.Show("Hi " + greetingMsg);
 
+            MyMessage anotherWindow = new MyMessage();
+            anotherWindow.Show();
+        }
     }
 }
